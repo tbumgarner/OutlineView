@@ -181,7 +181,7 @@ public extension OutlineView {
     init(
         _ data: Data,
         children: KeyPath<Data.Element, Data?>,
-        isGroupItem: @escaping (Data.Element) -> Bool = { _ in false },
+        isGroupItem: @escaping (Data.Element) -> Bool,
         selection: Binding<Data.Element?>,
         content: @escaping (Data.Element) -> NSView
     ) {
@@ -272,7 +272,7 @@ public extension OutlineView where Drop == NoDropReceiver<Data.Element> {
     init(
         _ data: Data,
         children: KeyPath<Data.Element, Data?>,
-        isGroupItem: @escaping (Data.Element) -> Bool = { _ in false },
+        isGroupItem: @escaping (Data.Element) -> Bool,
         selection: Binding<Data.Element?>,
         content: @escaping (Data.Element) -> NSView
     ) {
@@ -367,7 +367,7 @@ public extension OutlineView {
     init(
         _ data: Data,
         children: KeyPath<Data.Element, Data?>,
-        isGroupItem: @escaping (Data.Element) -> Bool = { _ in false },
+        isGroupItem: @escaping (Data.Element) -> Bool,
         selection: Binding<Data.Element?>,
         separatorInsets: ((Data.Element) -> NSEdgeInsets)? = nil,
         content: @escaping (Data.Element) -> NSView
@@ -469,7 +469,7 @@ public extension OutlineView where Drop == NoDropReceiver<Data.Element> {
     init(
         _ data: Data,
         children: KeyPath<Data.Element, Data?>,
-        isGroupItem: @escaping (Data.Element) -> Bool = { _ in false },
+        isGroupItem: @escaping (Data.Element) -> Bool,
         selection: Binding<Data.Element?>,
         separatorInsets: ((Data.Element) -> NSEdgeInsets)? = nil,
         content: @escaping (Data.Element) -> NSView
