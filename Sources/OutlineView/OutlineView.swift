@@ -181,15 +181,15 @@ public extension OutlineView {
     init(
         _ data: Data,
         children: KeyPath<Data.Element, Data?>,
-        isGroupItem: @escaping (Data.Element) -> Bool,
         selection: Binding<Data.Element?>,
+        isGroupItem: @escaping (Data.Element) -> Bool,
         content: @escaping (Data.Element) -> NSView
     ) {
         self.data = data
         self.childSource = .keyPath(children)
-        self.isGroupItem = isGroupItem
         self._selection = selection
         self.separatorVisibility = .hidden
+        self.isGroupItem = isGroupItem
         self.content = content
     }
 
@@ -272,15 +272,15 @@ public extension OutlineView where Drop == NoDropReceiver<Data.Element> {
     init(
         _ data: Data,
         children: KeyPath<Data.Element, Data?>,
-        isGroupItem: @escaping (Data.Element) -> Bool,
         selection: Binding<Data.Element?>,
+        isGroupItem: @escaping (Data.Element) -> Bool,
         content: @escaping (Data.Element) -> NSView
     ) {
         self.data = data
         self.childSource = .keyPath(children)
-        self.isGroupItem = isGroupItem
         self._selection = selection
         self.separatorVisibility = .hidden
+        self.isGroupItem = isGroupItem
         self.content = content
     }
 
@@ -367,17 +367,17 @@ public extension OutlineView {
     init(
         _ data: Data,
         children: KeyPath<Data.Element, Data?>,
-        isGroupItem: @escaping (Data.Element) -> Bool,
         selection: Binding<Data.Element?>,
         separatorInsets: ((Data.Element) -> NSEdgeInsets)? = nil,
+        isGroupItem: @escaping (Data.Element) -> Bool,
         content: @escaping (Data.Element) -> NSView
     ) {
         self.data = data
         self.childSource = .keyPath(children)
-        self.isGroupItem = isGroupItem
         self._selection = selection
         self.separatorInsets = separatorInsets
         self.separatorVisibility = separatorInsets == nil ? .hidden : .visible
+        self.isGroupItem = isGroupItem
         self.content = content
     }
 
@@ -469,17 +469,17 @@ public extension OutlineView where Drop == NoDropReceiver<Data.Element> {
     init(
         _ data: Data,
         children: KeyPath<Data.Element, Data?>,
-        isGroupItem: @escaping (Data.Element) -> Bool,
         selection: Binding<Data.Element?>,
         separatorInsets: ((Data.Element) -> NSEdgeInsets)? = nil,
+        isGroupItem: @escaping (Data.Element) -> Bool,
         content: @escaping (Data.Element) -> NSView
     ) {
         self.data = data
         self.childSource = .keyPath(children)
-        self.isGroupItem = isGroupItem
         self._selection = selection
         self.separatorInsets = separatorInsets
         self.separatorVisibility = separatorInsets == nil ? .hidden : .visible
+        self.isGroupItem = isGroupItem
         self.content = content
     }
 
