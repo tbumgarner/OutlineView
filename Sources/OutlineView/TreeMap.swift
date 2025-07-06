@@ -20,7 +20,7 @@ class TreeMap<D: Hashable> {
         }
     }
         
-    private (set) var rootData: [D] = []
+    private(set) var rootData: [D] = []
     private var directory: [D : Node] = [:]
         
     var allItemIds: Set<D> {
@@ -28,7 +28,7 @@ class TreeMap<D: Hashable> {
     }
     
     init() {}
-    
+
     init<Data: Sequence>(
         rootItems: [OutlineViewItem<Data>],
         itemIsExpanded: ((OutlineViewItem<Data>) -> Bool)
