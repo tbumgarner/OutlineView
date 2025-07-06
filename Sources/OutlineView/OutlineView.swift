@@ -25,6 +25,7 @@ where Drop.DataElement == Data.Element {
     @Binding var selection: Data.Element?
     var content: (Data.Element) -> NSView
     var separatorInsets: ((Data.Element) -> NSEdgeInsets)?
+    var isGroupItem: (Data.Element) -> Bool = { _ in false }
 
     /// Outline view style is unavailable on macOS 10.15 and below.
     /// Stored as `Any` to make the property available on all platforms.
@@ -55,6 +56,7 @@ where Drop.DataElement == Data.Element {
             data: data,
             childrenSource: childSource,
             content: content,
+            isGroupItem: isGroupItem,
             selectionChanged: { selection = $0 },
             separatorInsets: separatorInsets)
         controller.setIndentation(to: indentation)

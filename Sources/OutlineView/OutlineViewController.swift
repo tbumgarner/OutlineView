@@ -16,8 +16,10 @@ where Drop.DataElement == Data.Element {
         data: Data,
         childrenSource: ChildSource<Data>,
         content: @escaping (Data.Element) -> NSView,
+        isGroupItem: ((Data.Element) -> Bool)?,
         selectionChanged: @escaping (Data.Element?) -> Void,
-        separatorInsets: ((Data.Element) -> NSEdgeInsets)?
+        separatorInsets: ((Data.Element) -> NSEdgeInsets)?,
+
     ) {
         scrollView.documentView = outlineView
         scrollView.hasVerticalScroller = true
@@ -40,7 +42,9 @@ where Drop.DataElement == Data.Element {
         delegate = OutlineViewDelegate(
             content: content,
             selectionChanged: selectionChanged,
-            separatorInsets: separatorInsets)
+            separatorInsets: separatorInsets,
+            isGroupItem: isGroupItem
+        )
         outlineView.dataSource = dataSource
         outlineView.delegate = delegate
 

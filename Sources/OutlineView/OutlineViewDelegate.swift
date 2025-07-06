@@ -7,6 +7,7 @@ where Data.Element: Identifiable {
     let selectionChanged: (Data.Element?) -> Void
     let separatorInsets: ((Data.Element) -> NSEdgeInsets)?
     var selectedItem: OutlineViewItem<Data>?
+    let isGroupItem: ((Data.Element) -> Bool)?
 
     func typedItem(_ item: Any) -> OutlineViewItem<Data> {
         item as! OutlineViewItem<Data>
@@ -15,11 +16,13 @@ where Data.Element: Identifiable {
     init(
         content: @escaping (Data.Element) -> NSView,
         selectionChanged: @escaping (Data.Element?) -> Void,
-        separatorInsets: ((Data.Element) -> NSEdgeInsets)?
+        separatorInsets: ((Data.Element) -> NSEdgeInsets)?,
+        isGroupItem: ((Data.Element) -> Bool)?
     ) {
         self.content = content
         self.selectionChanged = selectionChanged
         self.separatorInsets = separatorInsets
+        self.isGroupItem = isGroupItem
     }
 
     func outlineView(
@@ -43,6 +46,11 @@ where Data.Element: Identifiable {
         } else {
             return nil
         }
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
+        guard let isGroupItem else { return false }
+        return isGroupItem(typedItem(item).value)
     }
 
     // There seems to be a memory leak on macOS 11 where row views returned
