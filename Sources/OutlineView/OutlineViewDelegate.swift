@@ -43,19 +43,15 @@ where Data.Element: Identifiable {
         _ outlineView: NSOutlineView,
         rowViewForItem item: Any
     ) -> NSTableRowView? {
-        guard let isGroupItem = isGroupItem else {
-            return nil
-        }
-        let itemValue = typedItem(item).value
-        if isGroupItem(itemValue) {
-            // For group rows, use default AppKit styling.
+        let value = typedItem(item).value
+        if let isGroupItem, isGroupItem(value) {
             return nil
         } else {
             if #available(macOS 11.0, *) {
                 // For normal rows, provide adjustable separator row view.
                 releaseUnusedRowViews(from: outlineView)
                 let rowView = AdjustableSeparatorRowView(frame: .zero)
-                rowView.separatorInsets = separatorInsets?(itemValue)
+                rowView.separatorInsets = separatorInsets?(value)
                 return rowView
             } else {
                 return nil
@@ -66,6 +62,30 @@ where Data.Element: Identifiable {
     func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
         guard let isGroupItem else { return false }
         return isGroupItem(typedItem(item).value)
+    }
+
+    func outlineView(
+        _ outlineView: NSOutlineView,
+        shouldSelectItem item: Any
+    ) -> Bool {
+        let value = typedItem(item).value
+        if let isGroupItem, isGroupItem(value) {
+            return false
+        }
+        return true
+    }
+
+    func outlineView(
+        _ outlineView: NSOutlineView,
+        objectValueFor tableColumn: NSTableColumn?,
+        byItem item: Any?
+    ) -> Any? {
+        let value = typedItem(item as Any).value
+        if let isGroupItem, isGroupItem(value) {
+            return "Section"
+        }
+        // For non-group rows, returning nil is fine.
+        return nil
     }
 
     // There seems to be a memory leak on macOS 11 where row views returned
