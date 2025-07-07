@@ -38,11 +38,16 @@ where Data.Element: Identifiable {
         rowViewForItem item: Any
     ) -> NSTableRowView? {
         if #available(macOS 11.0, *) {
-            // Release any unused row views.
-            releaseUnusedRowViews(from: outlineView)
-            let rowView = AdjustableSeparatorRowView(frame: .zero)
-            rowView.separatorInsets = separatorInsets?(typedItem(item).value)
-            return rowView
+            let itemValue = typedItem(item).value
+            if isGroupItem?(itemValue) == true {
+                // Release any unused row views.
+                releaseUnusedRowViews(from: outlineView)
+                let rowView = AdjustableSeparatorRowView(frame: .zero)
+                rowView.separatorInsets = separatorInsets?(typedItem(item).value)
+                return rowView
+            } else {
+                return nil
+            }
         } else {
             return nil
         }
