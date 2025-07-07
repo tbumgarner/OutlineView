@@ -30,38 +30,7 @@ where Data.Element: Identifiable {
         viewFor tableColumn: NSTableColumn?,
         item: Any
     ) -> NSView? {
-        let value = typedItem(item).value
-
-        if let isGroupItem, isGroupItem(value) {
-            // Reuse identifier
-            let identifier = NSUserInterfaceItemIdentifier("GroupCell")
-            if let cell = outlineView.makeView(withIdentifier: identifier, owner: self) as? NSTableCellView {
-                cell.textField?.stringValue = "Section"
-                return cell
-            }
-
-            // Create new
-            let cell = NSTableCellView()
-            cell.identifier = identifier
-
-            let label = NSTextField(labelWithString: "Section")
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
-            label.textColor = NSColor.secondaryLabelColor
-
-            cell.textField = label
-            cell.addSubview(label)
-
-            NSLayoutConstraint.activate([
-                label.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 6),
-                label.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -6),
-                label.centerYAnchor.constraint(equalTo: cell.centerYAnchor)
-            ])
-
-            return cell
-        }
-
-        return content(typedItem(item).value)
+        content(typedItem(item).value)
     }
 
     func outlineView(
