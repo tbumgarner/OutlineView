@@ -69,19 +69,6 @@ where Data.Element: Identifiable {
         return true
     }
 
-    func outlineView(
-        _ outlineView: NSOutlineView,
-        objectValueFor tableColumn: NSTableColumn?,
-        byItem item: Any?
-    ) -> Any? {
-        let value = typedItem(item as Any).value
-        if let isGroupItem, isGroupItem(value) {
-            return "Section"
-        }
-        // For non-group rows, returning nil is fine.
-        return nil
-    }
-
     // There seems to be a memory leak on macOS 11 where row views returned
     // from `rowViewForItem` are never freed. This hack patches the leak.
     func releaseUnusedRowViews(from outlineView: NSOutlineView) {
