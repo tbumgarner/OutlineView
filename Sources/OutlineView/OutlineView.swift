@@ -26,6 +26,7 @@ where Drop.DataElement == Data.Element {
     var content: (Data.Element) -> NSView
     var separatorInsets: ((Data.Element) -> NSEdgeInsets)?
     var isGroupItem: (Data.Element) -> Bool = { _ in false }
+    var groupTitle: (Data.Element) -> String = { _ in "" }
 
     /// Outline view style is unavailable on macOS 10.15 and below.
     /// Stored as `Any` to make the property available on all platforms.
@@ -57,6 +58,7 @@ where Drop.DataElement == Data.Element {
             childrenSource: childSource,
             content: content,
             isGroupItem: isGroupItem,
+            groupTitle: groupTitle,
             selectionChanged: { selection = $0 },
             separatorInsets: separatorInsets)
         controller.setIndentation(to: indentation)
@@ -183,6 +185,7 @@ public extension OutlineView {
         children: KeyPath<Data.Element, Data?>,
         selection: Binding<Data.Element?>,
         isGroupItem: @escaping (Data.Element) -> Bool = { _ in false },
+        groupTitle: @escaping (Data.Element) -> String = { _ in "" },
         content: @escaping (Data.Element) -> NSView
     ) {
         self.data = data
@@ -190,6 +193,7 @@ public extension OutlineView {
         self._selection = selection
         self.separatorVisibility = .hidden
         self.isGroupItem = isGroupItem
+        self.groupTitle = groupTitle
         self.content = content
     }
 
@@ -227,6 +231,7 @@ public extension OutlineView {
         selection: Binding<Data.Element?>,
         children: @escaping (Data.Element) -> Data?,
         isGroupItem: @escaping (Data.Element) -> Bool = { _ in false },
+        groupTitle: @escaping (Data.Element) -> String = { _ in "" },
         content: @escaping (Data.Element) -> NSView
     ) {
         self.data = data
@@ -234,6 +239,7 @@ public extension OutlineView {
         self.childSource = .provider(children)
         self.separatorVisibility = .hidden
         self.isGroupItem = isGroupItem
+        self.groupTitle = groupTitle
         self.content = content
     }
 }
@@ -276,6 +282,7 @@ public extension OutlineView where Drop == NoDropReceiver<Data.Element> {
         children: KeyPath<Data.Element, Data?>,
         selection: Binding<Data.Element?>,
         isGroupItem: @escaping (Data.Element) -> Bool = { _ in false },
+        groupTitle: @escaping (Data.Element) -> String = { _ in "" },
         content: @escaping (Data.Element) -> NSView
     ) {
         self.data = data
@@ -283,6 +290,7 @@ public extension OutlineView where Drop == NoDropReceiver<Data.Element> {
         self._selection = selection
         self.separatorVisibility = .hidden
         self.isGroupItem = isGroupItem
+        self.groupTitle = groupTitle
         self.content = content
     }
 
@@ -320,6 +328,7 @@ public extension OutlineView where Drop == NoDropReceiver<Data.Element> {
         selection: Binding<Data.Element?>,
         children: @escaping (Data.Element) -> Data?,
         isGroupItem: @escaping (Data.Element) -> Bool = { _ in false },
+        groupTitle: @escaping (Data.Element) -> String = { _ in "" },
         content: @escaping (Data.Element) -> NSView
     ) {
         self.data = data
@@ -327,6 +336,7 @@ public extension OutlineView where Drop == NoDropReceiver<Data.Element> {
         self.childSource = .provider(children)
         self.separatorVisibility = .hidden
         self.isGroupItem = isGroupItem
+        self.groupTitle = groupTitle
         self.content = content
     }
 }
@@ -374,6 +384,7 @@ public extension OutlineView {
         selection: Binding<Data.Element?>,
         separatorInsets: ((Data.Element) -> NSEdgeInsets)? = nil,
         isGroupItem: @escaping (Data.Element) -> Bool = { _ in false },
+        groupTitle: @escaping (Data.Element) -> String = { _ in "" },
         content: @escaping (Data.Element) -> NSView
     ) {
         self.data = data
@@ -382,6 +393,7 @@ public extension OutlineView {
         self.separatorInsets = separatorInsets
         self.separatorVisibility = separatorInsets == nil ? .hidden : .visible
         self.isGroupItem = isGroupItem
+        self.groupTitle = groupTitle
         self.content = content
     }
 
@@ -424,6 +436,7 @@ public extension OutlineView {
         children: @escaping (Data.Element) -> Data?,
         separatorInsets: ((Data.Element) -> NSEdgeInsets)? = nil,
         isGroupItem: @escaping (Data.Element) -> Bool = { _ in false },
+        groupTitle: @escaping (Data.Element) -> String = { _ in "" },
         content: @escaping (Data.Element) -> NSView
     ) {
         self.data = data
@@ -432,6 +445,7 @@ public extension OutlineView {
         self.separatorInsets = separatorInsets
         self.separatorVisibility = separatorInsets == nil ? .hidden : .visible
         self.isGroupItem = isGroupItem
+        self.groupTitle = groupTitle
         self.content = content
     }
 }
@@ -478,6 +492,7 @@ public extension OutlineView where Drop == NoDropReceiver<Data.Element> {
         selection: Binding<Data.Element?>,
         separatorInsets: ((Data.Element) -> NSEdgeInsets)? = nil,
         isGroupItem: @escaping (Data.Element) -> Bool = { _ in false },
+        groupTitle: @escaping (Data.Element) -> String = { _ in "" },
         content: @escaping (Data.Element) -> NSView
     ) {
         self.data = data
@@ -486,6 +501,7 @@ public extension OutlineView where Drop == NoDropReceiver<Data.Element> {
         self.separatorInsets = separatorInsets
         self.separatorVisibility = separatorInsets == nil ? .hidden : .visible
         self.isGroupItem = isGroupItem
+        self.groupTitle = groupTitle
         self.content = content
     }
 
@@ -527,6 +543,7 @@ public extension OutlineView where Drop == NoDropReceiver<Data.Element> {
         children: @escaping (Data.Element) -> Data?,
         separatorInsets: ((Data.Element) -> NSEdgeInsets)? = nil,
         isGroupItem: @escaping (Data.Element) -> Bool = { _ in false },
+        groupTitle: @escaping (Data.Element) -> String = { _ in "" },
         content: @escaping (Data.Element) -> NSView
     ) {
         self.data = data
@@ -535,6 +552,7 @@ public extension OutlineView where Drop == NoDropReceiver<Data.Element> {
         self.separatorInsets = separatorInsets
         self.separatorVisibility = separatorInsets == nil ? .hidden : .visible
         self.isGroupItem = isGroupItem
+        self.groupTitle = groupTitle
         self.content = content
     }
 }

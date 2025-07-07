@@ -8,6 +8,7 @@ where Data.Element: Identifiable {
     let separatorInsets: ((Data.Element) -> NSEdgeInsets)?
     var selectedItem: OutlineViewItem<Data>?
     let isGroupItem: ((Data.Element) -> Bool)?
+    let groupTitle: ((Data.Element) -> String)?
 
     func typedItem(_ item: Any) -> OutlineViewItem<Data> {
         item as! OutlineViewItem<Data>
@@ -17,12 +18,14 @@ where Data.Element: Identifiable {
         content: @escaping (Data.Element) -> NSView,
         selectionChanged: @escaping (Data.Element?) -> Void,
         separatorInsets: ((Data.Element) -> NSEdgeInsets)?,
-        isGroupItem: ((Data.Element) -> Bool)?
+        isGroupItem: ((Data.Element) -> Bool)?,
+        groupTitle: ((Data.Element) -> String)?
     ) {
         self.content = content
         self.selectionChanged = selectionChanged
         self.separatorInsets = separatorInsets
         self.isGroupItem = isGroupItem
+        self.groupTitle = groupTitle
     }
 
     func outlineView(
@@ -30,7 +33,39 @@ where Data.Element: Identifiable {
         viewFor tableColumn: NSTableColumn?,
         item: Any
     ) -> NSView? {
-        content(typedItem(item).value)
+        let value = typedItem(item).value
+        if let isGroupItem, isGroupItem(value) {
+            let groupTitle = groupTitle?(value) ?? ""
+
+            // Reuse identifier
+            let identifier = NSUserInterfaceItemIdentifier("GroupCell")
+            if let cell = outlineView.makeView(withIdentifier: identifier, owner: self) as? NSTableCellView {
+                cell.textField?.stringValue = groupTitle
+                return cell
+            }
+
+            // Create new
+            let cell = NSTableCellView()
+            cell.identifier = identifier
+
+            let label = NSTextField(labelWithString: groupTitle)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
+            label.textColor = NSColor.secondaryLabelColor
+
+            cell.textField = label
+            cell.addSubview(label)
+
+            NSLayoutConstraint.activate([
+                label.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 6),
+                label.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -6),
+                label.centerYAnchor.constraint(equalTo: cell.centerYAnchor)
+            ])
+
+            return cell
+        }
+
+       return  content(typedItem(item).value)
     }
 
     func outlineView(

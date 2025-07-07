@@ -17,6 +17,7 @@ where Drop.DataElement == Data.Element {
         childrenSource: ChildSource<Data>,
         content: @escaping (Data.Element) -> NSView,
         isGroupItem: ((Data.Element) -> Bool)?,
+        groupTitle: ((Data.Element) -> String)?,
         selectionChanged: @escaping (Data.Element?) -> Void,
         separatorInsets: ((Data.Element) -> NSEdgeInsets)?,
 
@@ -43,7 +44,8 @@ where Drop.DataElement == Data.Element {
             content: content,
             selectionChanged: selectionChanged,
             separatorInsets: separatorInsets,
-            isGroupItem: isGroupItem
+            isGroupItem: isGroupItem,
+            groupTitle: groupTitle
         )
         outlineView.dataSource = dataSource
         outlineView.delegate = delegate
