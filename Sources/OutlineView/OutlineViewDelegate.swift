@@ -57,7 +57,7 @@ where Data.Element: Identifiable {
             cell.addSubview(label)
 
             NSLayoutConstraint.activate([
-                label.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 6),
+                label.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 0),
                 label.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -6),
                 label.centerYAnchor.constraint(equalTo: cell.centerYAnchor)
             ])
