@@ -30,7 +30,13 @@ where Data.Element: Identifiable {
         viewFor tableColumn: NSTableColumn?,
         item: Any
     ) -> NSView? {
-        content(typedItem(item).value)
+        let value = typedItem(item).value
+
+        if let isGroupItem, isGroupItem(value) {
+            return nil
+        }
+
+        return content(typedItem(item).value)
     }
 
     func outlineView(
