@@ -37,19 +37,23 @@ where Data.Element: Identifiable {
         _ outlineView: NSOutlineView,
         rowViewForItem item: Any
     ) -> NSTableRowView? {
-        if #available(macOS 11.0, *) {
-            let itemValue = typedItem(item).value
-            if isGroupItem?(itemValue) == true {
-                // Release any unused row views.
+        guard let isGroupItem = isGroupItem else {
+            return nil
+        }
+        let itemValue = typedItem(item).value
+        if isGroupItem(itemValue) {
+            // For group rows, use default AppKit styling.
+            return nil
+        } else {
+            if #available(macOS 11.0, *) {
+                // For normal rows, provide adjustable separator row view.
                 releaseUnusedRowViews(from: outlineView)
                 let rowView = AdjustableSeparatorRowView(frame: .zero)
-                rowView.separatorInsets = separatorInsets?(typedItem(item).value)
+                rowView.separatorInsets = separatorInsets?(itemValue)
                 return rowView
             } else {
                 return nil
             }
-        } else {
-            return nil
         }
     }
 
