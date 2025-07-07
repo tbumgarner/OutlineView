@@ -33,7 +33,14 @@ where Data.Element: Identifiable {
         let value = typedItem(item).value
 
         if let isGroupItem, isGroupItem(value) {
-            return nil
+            // Create a basic cell view with a label
+            let cell = NSTextField(labelWithString: "Section")
+            cell.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
+            cell.textColor = NSColor.secondaryLabelColor
+            cell.drawsBackground = false
+            cell.isBordered = false
+            cell.isEditable = false
+            return cell
         }
 
         return content(typedItem(item).value)
