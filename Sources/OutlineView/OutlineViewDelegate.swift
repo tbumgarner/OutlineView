@@ -33,13 +33,31 @@ where Data.Element: Identifiable {
         let value = typedItem(item).value
 
         if let isGroupItem, isGroupItem(value) {
-            // Create a basic cell view with a label
-            let cell = NSTextField(labelWithString: "Section")
-            cell.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
-            cell.textColor = NSColor.secondaryLabelColor
-            cell.drawsBackground = false
-            cell.isBordered = false
-            cell.isEditable = false
+            // Reuse identifier
+            let identifier = NSUserInterfaceItemIdentifier("GroupCell")
+            if let cell = outlineView.makeView(withIdentifier: identifier, owner: self) as? NSTableCellView {
+                cell.textField?.stringValue = "Section"
+                return cell
+            }
+
+            // Create new
+            let cell = NSTableCellView()
+            cell.identifier = identifier
+
+            let label = NSTextField(labelWithString: "Section")
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
+            label.textColor = NSColor.secondaryLabelColor
+
+            cell.textField = label
+            cell.addSubview(label)
+
+            NSLayoutConstraint.activate([
+                label.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 6),
+                label.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -6),
+                label.centerYAnchor.constraint(equalTo: cell.centerYAnchor)
+            ])
+
             return cell
         }
 
