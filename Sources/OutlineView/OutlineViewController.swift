@@ -97,13 +97,16 @@ where Drop.DataElement == Data.Element {
         guard !hasPerformedInitialLayout else { return }
         hasPerformedInitialLayout = true
 
+        DispatchQueue.main.async {
+            self.didLayout?(self.outlineView)
+        }
+
         // FIXME: !!! MAJOR HACK !!!
         // I have this async after 0.3 to fix a bug where the group titles are not sized appropriately,
         // and you can see animations if the user is expanding items on launch.
         // Need to come up with a more determinate signal to trigger this code on.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.outlineView.enclosingScrollView?.isHidden = false
-            self.didLayout?(self.outlineView)
         }
     }
 }
