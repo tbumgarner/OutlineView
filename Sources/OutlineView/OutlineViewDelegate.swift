@@ -9,6 +9,7 @@ where Data.Element: Identifiable {
     var selectedItem: OutlineViewItem<Data>?
     let isGroupItem: ((Data.Element) -> Bool)?
     let groupTitle: ((Data.Element) -> String)?
+    let configuration: ((NSOutlineView) -> Void)?
 
     func typedItem(_ item: Any) -> OutlineViewItem<Data> {
         item as! OutlineViewItem<Data>
@@ -18,14 +19,16 @@ where Data.Element: Identifiable {
         content: @escaping (Data.Element) -> NSView,
         selectionChanged: @escaping (Data.Element?) -> Void,
         separatorInsets: ((Data.Element) -> NSEdgeInsets)?,
-        isGroupItem: ((Data.Element) -> Bool)?,
-        groupTitle: ((Data.Element) -> String)?
+        isGroupItem: ((Data.Element) -> Bool)? = nil,
+        groupTitle: ((Data.Element) -> String)? = nil,
+        configuration: ((NSOutlineView) -> Void)? = nil
     ) {
         self.content = content
         self.selectionChanged = selectionChanged
         self.separatorInsets = separatorInsets
         self.isGroupItem = isGroupItem
         self.groupTitle = groupTitle
+        self.configuration = configuration
     }
 
     func outlineView(

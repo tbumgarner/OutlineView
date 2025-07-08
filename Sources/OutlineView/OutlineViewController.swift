@@ -18,9 +18,9 @@ where Drop.DataElement == Data.Element {
         content: @escaping (Data.Element) -> NSView,
         isGroupItem: ((Data.Element) -> Bool)?,
         groupTitle: ((Data.Element) -> String)?,
+        configuration: ((NSOutlineView) -> Void)?,
         selectionChanged: @escaping (Data.Element?) -> Void,
-        separatorInsets: ((Data.Element) -> NSEdgeInsets)?,
-
+        separatorInsets: ((Data.Element) -> NSEdgeInsets)?
     ) {
         scrollView.documentView = outlineView
         scrollView.hasVerticalScroller = true
@@ -45,7 +45,8 @@ where Drop.DataElement == Data.Element {
             selectionChanged: selectionChanged,
             separatorInsets: separatorInsets,
             isGroupItem: isGroupItem,
-            groupTitle: groupTitle
+            groupTitle: groupTitle,
+            configuration: configuration
         )
         outlineView.dataSource = dataSource
         outlineView.delegate = delegate
@@ -150,5 +151,13 @@ extension OutlineViewController {
         {
             outlineView.registerForDraggedTypes(acceptedTypes)
         }
+    }
+
+    func setAutoSaveExpandedItems(_ saveExpandedItems: Bool) {
+        outlineView.autosaveExpandedItems = saveExpandedItems
+    }
+
+    func setAutoSaveName(_ name: String?) {
+        outlineView.autosaveName = name
     }
 }
