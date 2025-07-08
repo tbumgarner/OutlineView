@@ -5,12 +5,15 @@ public class OutlineViewController<Data: Sequence, Drop: DropReceiver>: NSViewCo
 where Drop.DataElement == Data.Element {
     let outlineView = NSOutlineView()
     let scrollView = NSScrollView(frame: NSRect(x: 0, y: 0, width: 400, height: 400))
-    
+
     let dataSource: OutlineViewDataSource<Data, Drop>
     let delegate: OutlineViewDelegate<Data>
     let updater = OutlineViewUpdater<Data>()
 
     let childrenSource: ChildSource<Data>
+
+    var didLayout: ((NSOutlineView) -> Void)?
+    var hasPerformedInitialLayout = false
 
     init(
         data: Data,
@@ -52,7 +55,7 @@ where Drop.DataElement == Data.Element {
         outlineView.delegate = delegate
 
         self.childrenSource = childrenSource
-        
+
         super.init(nibName: nil, bundle: nil)
 
         view.addSubview(scrollView)
@@ -73,12 +76,29 @@ where Drop.DataElement == Data.Element {
         view = NSView()
     }
 
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        outlineView.enclosingScrollView?.isHidden = true
+    }
+
     public override func viewWillAppear() {
         // Size the column to take the full width. This combined with
         // the uniform column autoresizing style allows the column to
         // adjust its width with a change in width of the outline view.
         outlineView.sizeLastColumnToFit()
         super.viewWillAppear()
+    }
+
+    public override func viewDidAppear() {
+        super.viewDidAppear()
+
+        guard !hasPerformedInitialLayout else { return }
+        hasPerformedInitialLayout = true
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.outlineView.enclosingScrollView?.isHidden = false
+            self.didLayout?(self.outlineView)
+        }
     }
 }
 

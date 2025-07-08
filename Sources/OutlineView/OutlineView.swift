@@ -28,6 +28,7 @@ where Drop.DataElement == Data.Element {
     var isGroupItem: ((Data.Element) -> Bool)? = { _ in false }
     var groupTitle: ((Data.Element) -> String)? = { _ in "" }
     var configuration: ((NSOutlineView) -> Void)?
+    var didLayout: ((NSOutlineView) -> Void)?
 
     /// Outline view style is unavailable on macOS 10.15 and below.
     /// Stored as `Any` to make the property available on all platforms.
@@ -38,7 +39,7 @@ where Drop.DataElement == Data.Element {
         get {
             _styleStorage
                 .flatMap { $0 as? NSOutlineView.Style }
-                ?? .automatic
+            ?? .automatic
         }
         set { _styleStorage = newValue }
     }
@@ -55,7 +56,7 @@ where Drop.DataElement == Data.Element {
     var autoSaveName: String?
 
     // MARK: NSViewControllerRepresentable
-    
+
     public func makeNSViewController(context: Context) -> OutlineViewController<Data, Drop> {
         let controller = OutlineViewController<Data, Drop>(
             data: data,
@@ -70,6 +71,7 @@ where Drop.DataElement == Data.Element {
         if #available(macOS 11.0, *) {
             controller.setStyle(to: style)
             configuration?(controller.outlineView)
+            controller.didLayout = didLayout
         }
         return controller
     }
@@ -87,6 +89,12 @@ where Drop.DataElement == Data.Element {
         outlineController.setAcceptedDragTypes(acceptedDropTypes)
         outlineController.setAutoSaveExpandedItems(autoSaveExpandedItems)
         outlineController.setAutoSaveName(autoSaveName)
+    }
+
+    public func outlineViewDidLayout(_ didLayout: @escaping (NSOutlineView) -> Void) -> Self {
+        var copy = self
+        copy.didLayout = didLayout
+        return copy
     }
 }
 
