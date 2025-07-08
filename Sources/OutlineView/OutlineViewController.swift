@@ -78,6 +78,8 @@ where Drop.DataElement == Data.Element {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        // NOTE: We hide the scroll view so that any animations on view load aren't visible.
+        // Also gives us a chance to make sure any group items render correctly
         outlineView.enclosingScrollView?.isHidden = true
     }
 
@@ -95,6 +97,10 @@ where Drop.DataElement == Data.Element {
         guard !hasPerformedInitialLayout else { return }
         hasPerformedInitialLayout = true
 
+        // FIXME: !!! MAJOR HACK !!!
+        // I have this async after 0.3 to fix a bug where the group titles are not sized appropriately,
+        // and you can see animations if the user is expanding items on launch.
+        // Need to come up with a more determinate signal to trigger this code on.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.outlineView.enclosingScrollView?.isHidden = false
             self.didLayout?(self.outlineView)
