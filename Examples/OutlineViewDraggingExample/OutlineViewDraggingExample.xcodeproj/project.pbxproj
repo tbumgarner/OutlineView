@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		336C600325CCAEE700230C37 /* OutlineView in Frameworks */ = {isa = PBXBuildFile; productRef = 336C600225CCAEE700230C37 /* OutlineView */; };
+		65CA415B2E1EFABF0082A673 /* OutlineView in Frameworks */ = {isa = PBXBuildFile; productRef = 65CA415A2E1EFABF0082A673 /* OutlineView */; };
 		94DB3C032950D3DB00515489 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DB3BFD2950D1A700515489 /* ViewModel.swift */; };
 		94DB3C042950D3DF00515489 /* OutlineViewDraggingExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DB3C002950D1A700515489 /* OutlineViewDraggingExampleApp.swift */; };
 		94DB3C052950D3E200515489 /* FileItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DB3BFA2950D1A700515489 /* FileItemView.swift */; };
@@ -33,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65CA415B2E1EFABF0082A673 /* OutlineView in Frameworks */,
 				336C600325CCAEE700230C37 /* OutlineView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -107,6 +109,7 @@
 			name = OutlineViewDraggingExample;
 			packageProductDependencies = (
 				336C600225CCAEE700230C37 /* OutlineView */,
+				65CA415A2E1EFABF0082A673 /* OutlineView */,
 			);
 			productName = OutlineViewExample;
 			productReference = 336C5FDE25CC9F1600230C37 /* OutlineViewDraggingExample.app */;
@@ -135,6 +138,9 @@
 				Base,
 			);
 			mainGroup = 336C5FD525CC9F1500230C37;
+			packageReferences = (
+				65CA41592E1EFABF0082A673 /* XCRemoteSwiftPackageReference "OutlineView" */,
+			);
 			productRefGroup = 336C5FDF25CC9F1600230C37 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -355,9 +361,25 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		65CA41592E1EFABF0082A673 /* XCRemoteSwiftPackageReference "OutlineView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tbumgarner/OutlineView.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		336C600225CCAEE700230C37 /* OutlineView */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = OutlineView;
+		};
+		65CA415A2E1EFABF0082A673 /* OutlineView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65CA41592E1EFABF0082A673 /* XCRemoteSwiftPackageReference "OutlineView" */;
 			productName = OutlineView;
 		};
 /* End XCSwiftPackageProductDependency section */

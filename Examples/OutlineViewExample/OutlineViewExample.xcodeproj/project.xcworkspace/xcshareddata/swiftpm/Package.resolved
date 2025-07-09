@@ -1,0 +1,15 @@
+{
+  "originHash" : "20f93961e0d76a69e03449096c30dbf4ed8869f35a3ac7fd39253513ced44131",
+  "pins" : [
+    {
+      "identity" : "outlineview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tbumgarner/OutlineView.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "5b718e20ced2e08ee0f50659fb757f78d5ef895c"
+      }
+    }
+  ],
+  "version" : 3
+}

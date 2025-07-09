@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,7 @@
 		336C5FE925CC9F1800230C37 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 336C5FE825CC9F1800230C37 /* Preview Assets.xcassets */; };
 		336C5FFD25CCA8DA00230C37 /* FileItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336C5FFC25CCA8D900230C37 /* FileItemView.swift */; };
 		336C600325CCAEE700230C37 /* OutlineView in Frameworks */ = {isa = PBXBuildFile; productRef = 336C600225CCAEE700230C37 /* OutlineView */; };
+		65CA41582E1EFA8D0082A673 /* OutlineView in Frameworks */ = {isa = PBXBuildFile; productRef = 65CA41572E1EFA8D0082A673 /* OutlineView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65CA41582E1EFA8D0082A673 /* OutlineView in Frameworks */,
 				336C600325CCAEE700230C37 /* OutlineView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -106,6 +108,7 @@
 			name = OutlineViewExample;
 			packageProductDependencies = (
 				336C600225CCAEE700230C37 /* OutlineView */,
+				65CA41572E1EFA8D0082A673 /* OutlineView */,
 			);
 			productName = OutlineViewExample;
 			productReference = 336C5FDE25CC9F1600230C37 /* OutlineViewExample.app */;
@@ -134,6 +137,9 @@
 				Base,
 			);
 			mainGroup = 336C5FD525CC9F1500230C37;
+			packageReferences = (
+				65CA41562E1EFA8D0082A673 /* XCRemoteSwiftPackageReference "OutlineView" */,
+			);
 			productRefGroup = 336C5FDF25CC9F1600230C37 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -355,9 +361,25 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		65CA41562E1EFA8D0082A673 /* XCRemoteSwiftPackageReference "OutlineView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tbumgarner/OutlineView.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		336C600225CCAEE700230C37 /* OutlineView */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = OutlineView;
+		};
+		65CA41572E1EFA8D0082A673 /* OutlineView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65CA41562E1EFA8D0082A673 /* XCRemoteSwiftPackageReference "OutlineView" */;
 			productName = OutlineView;
 		};
 /* End XCSwiftPackageProductDependency section */
