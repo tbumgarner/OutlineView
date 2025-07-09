@@ -3,7 +3,7 @@ import Cocoa
 @available(macOS 10.15, *)
 public class OutlineViewController<Data: Sequence, Drop: DropReceiver>: NSViewController
 where Drop.DataElement == Data.Element {
-    let outlineView = NSOutlineView()
+    let outlineView = ContextMenuOutlineView()
     let scrollView = NSScrollView(frame: NSRect(x: 0, y: 0, width: 400, height: 400))
 
     let dataSource: OutlineViewDataSource<Data, Drop>
@@ -188,5 +188,22 @@ extension OutlineViewController {
 
     func setAutoSaveName(_ name: String?) {
         outlineView.autosaveName = name
+    }
+}
+
+@available(macOS 10.15, *)
+internal final class ContextMenuOutlineView: NSOutlineView {
+    override func menu(for event: NSEvent) -> NSMenu? {
+        let location = convert(event.locationInWindow, from: nil)
+        let row = row(at: location)
+
+        guard row >= 0,
+              let view = view(atColumn: 0, row: row, makeIfNecessary: false),
+              let menu = view.menu(for: event)
+        else {
+            return super.menu(for: event)
+        }
+
+        return menu
     }
 }
