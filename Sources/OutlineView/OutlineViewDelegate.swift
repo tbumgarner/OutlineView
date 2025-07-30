@@ -37,40 +37,25 @@ where Data.Element: Identifiable {
         item: Any
     ) -> NSView? {
         let value = typedItem(item).value
+
         if let isGroupItem, isGroupItem(value) {
             let groupTitle = groupTitle?(value) ?? ""
-
-            // Reuse identifier
             let identifier = NSUserInterfaceItemIdentifier("GroupCell")
-            if let cell = outlineView.makeView(withIdentifier: identifier, owner: self) as? NSTableCellView {
-                cell.textField?.stringValue = groupTitle
+
+            if let cell = outlineView.makeView(withIdentifier: identifier, owner: self) as? GroupCellView {
+                cell.label.stringValue = groupTitle
                 return cell
             }
 
-            // Create new
-            let cell = NSTableCellView()
+            let cell = GroupCellView()
             cell.identifier = identifier
-
-            let label = NSTextField(labelWithString: groupTitle)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
-            label.textColor = NSColor.secondaryLabelColor
-
-            cell.textField = label
-            cell.addSubview(label)
-
-            NSLayoutConstraint.activate([
-                label.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 0),
-                label.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -6),
-                label.centerYAnchor.constraint(equalTo: cell.centerYAnchor)
-            ])
-
+            cell.label.stringValue = groupTitle
             return cell
         }
 
-       return  content(typedItem(item).value)
+        return content(value)
     }
-
+    
     func outlineView(
         _ outlineView: NSOutlineView,
         rowViewForItem item: Any
