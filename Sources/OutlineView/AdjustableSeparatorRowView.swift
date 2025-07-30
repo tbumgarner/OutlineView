@@ -6,7 +6,7 @@ import ObjectiveC
 final class AdjustableSeparatorRowView: NSTableRowView {
     var separatorInsets: NSEdgeInsets?
 
-    public override init(frame frameRect: NSRect) {
+    override public init(frame frameRect: NSRect) {
         Self.setupSwizzling
         super.init(frame: frameRect)
     }

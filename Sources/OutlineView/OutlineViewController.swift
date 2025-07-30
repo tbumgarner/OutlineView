@@ -72,18 +72,18 @@ where Drop.DataElement == Data.Element {
         return nil
     }
 
-    public override func loadView() {
+    override public func loadView() {
         view = NSView()
     }
 
-    public override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         // NOTE: We hide the scroll view so that any animations on view load aren't visible.
         // Also gives us a chance to make sure any group items render correctly
         outlineView.enclosingScrollView?.isHidden = true
     }
 
-    public override func viewWillAppear() {
+    override public func viewWillAppear() {
         // Size the column to take the full width. This combined with
         // the uniform column autoresizing style allows the column to
         // adjust its width with a change in width of the outline view.
@@ -91,7 +91,7 @@ where Drop.DataElement == Data.Element {
         super.viewWillAppear()
     }
 
-    public override func viewDidAppear() {
+    override public func viewDidAppear() {
         super.viewDidAppear()
 
         guard !hasPerformedInitialLayout else { return }
